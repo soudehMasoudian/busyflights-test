@@ -21,7 +21,7 @@ public class ToughJetServiceImpl implements ToughJetService {
             toughJetResponse.getArrivalAirportName().equalsIgnoreCase(to) && toughJetResponse.getOutboundDateTime().equalsIgnoreCase(outboundDate) &&
             toughJetResponse.getInboundDateTime().equalsIgnoreCase(inboundDate) && numberOfAdults > 0) {
                 double price = ((toughJetResponse.getBasePrice() + toughJetResponse.getTax()) - (toughJetResponse.getBasePrice() *
-                        toughJetResponse.getDiscount()))  * numberOfAdults;
+                        (toughJetResponse.getDiscount() / 100)))  * numberOfAdults;
                 toughJetResponse.setBasePrice(price);
                 toughJetResponseList.add(toughJetResponse);
             }
