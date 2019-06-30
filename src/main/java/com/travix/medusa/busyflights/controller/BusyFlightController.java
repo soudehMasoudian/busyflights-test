@@ -45,28 +45,43 @@ public class BusyFlightController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         ArrayList<BusyFlightsResponse> busyFlightsResponseList = new ArrayList<>();
-        for (CrazyAirResponse crazyAirResponse : crazyAirResponseList) {
-            BusyFlightsResponse busyFlightsResponse = new BusyFlightsResponse();
-            busyFlightsResponse.setAirline(crazyAirResponse.getAirline());
-            busyFlightsResponse.setArrivalDate(crazyAirResponse.getArrivalDate());
-            busyFlightsResponse.setDepartureAirportCode(crazyAirResponse.getDepartureAirportCode());
-            busyFlightsResponse.setDepartureDate(crazyAirResponse.getDepartureDate());
-            busyFlightsResponse.setDestinationAirportCode(crazyAirResponse.getDestinationAirportCode());
-            busyFlightsResponse.setPrice(crazyAirResponse.getPrice());
-            busyFlightsResponse.setSupplier("CrazyAir");
-            busyFlightsResponseList.add(busyFlightsResponse);
+
+        try {
+            for (CrazyAirResponse crazyAirResponse : crazyAirResponseList) {
+                BusyFlightsResponse busyFlightsResponse = new BusyFlightsResponse();
+                busyFlightsResponse.setAirline(crazyAirResponse.getAirline());
+                busyFlightsResponse.setArrivalDate(crazyAirResponse.getArrivalDate());
+                busyFlightsResponse.setDepartureAirportCode(crazyAirResponse.getDepartureAirportCode());
+                busyFlightsResponse.setDepartureDate(crazyAirResponse.getDepartureDate());
+                busyFlightsResponse.setDestinationAirportCode(crazyAirResponse.getDestinationAirportCode());
+                busyFlightsResponse.setPrice(crazyAirResponse.getPrice());
+                busyFlightsResponse.setSupplier("CrazyAir");
+                busyFlightsResponseList.add(busyFlightsResponse);
+            }
+        } catch (Exception e) {
+            /* we can add two fields which named isSucceed and errorDescription
+            and set them with true and error description in case of every flight has error
+            we should return another type in return which our list is a part of it and the
+            other part is mentioned fields.
+             */
+            logger.error(e.getMessage());
         }
-        for (ToughJetResponse toughJetResponse : toughJetResponseList) {
-            BusyFlightsResponse busyFlightsResponse = new BusyFlightsResponse();
-            busyFlightsResponse.setAirline(toughJetResponse.getCarrier());
-            busyFlightsResponse.setArrivalDate(toughJetResponse.getInboundDateTime());
-            busyFlightsResponse.setDepartureAirportCode(toughJetResponse.getDepartureAirportName());
-            busyFlightsResponse.setDestinationAirportCode(toughJetResponse.getArrivalAirportName());
-            busyFlightsResponse.setPrice(toughJetResponse.getBasePrice());
-            busyFlightsResponse.setDepartureDate(toughJetResponse.getOutboundDateTime());
-            busyFlightsResponse.setSupplier("ToughJetAir");
-            busyFlightsResponseList.add(busyFlightsResponse);
+        try {
+            for (ToughJetResponse toughJetResponse : toughJetResponseList) {
+                BusyFlightsResponse busyFlightsResponse = new BusyFlightsResponse();
+                busyFlightsResponse.setAirline(toughJetResponse.getCarrier());
+                busyFlightsResponse.setArrivalDate(toughJetResponse.getInboundDateTime());
+                busyFlightsResponse.setDepartureAirportCode(toughJetResponse.getDepartureAirportName());
+                busyFlightsResponse.setDestinationAirportCode(toughJetResponse.getArrivalAirportName());
+                busyFlightsResponse.setPrice(toughJetResponse.getBasePrice());
+                busyFlightsResponse.setDepartureDate(toughJetResponse.getOutboundDateTime());
+                busyFlightsResponse.setSupplier("ToughJetAir");
+                busyFlightsResponseList.add(busyFlightsResponse);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
+
         Collections.sort(busyFlightsResponseList);
         return new ResponseEntity<>(busyFlightsResponseList, HttpStatus.OK);
     }
