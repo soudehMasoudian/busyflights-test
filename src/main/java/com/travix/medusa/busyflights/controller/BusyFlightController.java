@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,12 +68,6 @@ public class BusyFlightController {
             busyFlightsResponseList.add(busyFlightsResponse);
         }
         Collections.sort(busyFlightsResponseList);
-        return new ResponseEntity<List<BusyFlightsResponse>>(busyFlightsResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(busyFlightsResponseList, HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/searchTest", method = RequestMethod.GET)
-    public ResponseEntity<String> searchTest() {
-        return new ResponseEntity<String>("test", HttpStatus.OK);
-    }
-
-    }
+}
